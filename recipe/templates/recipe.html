@@ -1,6 +1,31 @@
 {% extends 'base.html'%}
 
 {% block body %}
-
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 mt-5 shadow-lg">
+        <h2 class="text-center mb-4">Add Recipe</h2>
+        <form method="post" action="">
+            {% csrf_token%}
+          <div class="mb-3">
+            <label for="name" class="form-label">Recipe Name</label>
+            <input type="text" class="form-control" id="name" name="recipe_name" placeholder="Enter your Recipe name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Recipe Description</label>
+            <textarea name="recipe_desc" id="" cols="30" rows="10" class="form-control"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">Choose a file</label>
+            <input type="file" class="form-control" id="name" name="recipe_image" >
+          </div>
+         
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Add Recipe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
