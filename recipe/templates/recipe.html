@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       <div class="col-md-6 mt-5 shadow-lg">
         <h2 class="text-center mb-4">Add Recipe</h2>
-        <form method="post" action="">
+        <form method="post" action="" enctype="multipart/form-data">
             {% csrf_token%}
           <div class="mb-3">
             <label for="name" class="form-label">Recipe Name</label>
@@ -17,7 +17,7 @@
           </div>
           <div class="mb-3">
             <label for="name" class="form-label">Choose a file</label>
-            <input type="file" class="form-control" id="name" name="recipe_image" >
+            <input type="file" class="form-control" id="image" name="recipe_image" >
           </div>
          
           <div class="text-center">
