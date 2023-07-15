@@ -23,6 +23,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('recipe/', recipes),
+    path('delete-recipe/<id>', delete_recipe,),
+    path('update-recipe/<id>', update_recipe,),
 ]
 
 if settings.DEBUG:
