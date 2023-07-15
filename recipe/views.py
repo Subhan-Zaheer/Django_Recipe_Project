@@ -43,16 +43,10 @@ def update_recipe(request, id):
             my_recipe.recipe_image = None
             print(f" Except part My recipe image contains : {my_recipe_image}")
             print(e)
-            pass
         print(f"My recipe image contains : {my_recipe_image}")
-        # my_recipe_image = None 
         if my_recipe_image == None:
             print(f"if my recipe image is none.")
             my_recipe_image = my_recipe.recipe_image
-        # recipe_obj = recipe(recipe_name = my_recipe_name, recipe_desc= my_recipe_description, 
-        # 
-        #                    recipe_image = my_recipe_image)
-        print(f"before saving the data my recipe object contains. {my_recipe.recipe_image}")
         my_recipe.save()
         return redirect('/recipe')
     data = {
