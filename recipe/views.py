@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from recipe.models import recipe
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -57,3 +58,20 @@ def update_recipe(request, id):
 def delete_recipe(request, id):
     recipe.objects.filter(id = id).delete()
     return redirect('/recipe')
+
+
+def login_page(request):
+    return render(request, 'login.html')
+
+def register(request):
+    if request.method == 'POST':
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+        user_name = request.POST.get('username')
+        password = request.POST.get('password')
+        user = User.objects.create(username= user_name, first_name= firstname, last_name = lastname)
+        print(password)
+        user.set_password(password)
+        user.save()
+        return redirect('/login/')
+    return render(request, 'register.html')
