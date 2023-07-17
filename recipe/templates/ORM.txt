@@ -1,0 +1,36 @@
+
+                    ##########################################
+                    This file will have some commands for ORM.
+                    ##########################################
+
+
+from recipe.models import *
+
+recipe = recipe.objects.all() // This line will help to get all objects of recipe in variable recipe
+
+Now for example we have to set some recipe view count that will store that how many times a specific recipe is being
+viewed. Let's say we have a variable in recipe model for this purpose named as recipe_view_count. 
+
+import random  // We will import this to give some random views to recipes. 
+
+for r in recipe:
+    r.recipe_view_count = random.randint(10, 100) // ALthough I haven't created any member named as recipe_view_count.
+                                                  // It is just for example.
+    r.save()
+ // Now for example we have save some value in recipe_view_count and now we want to get the recipe objects based on 
+ // their number of views in ascending or descending order. 
+
+ recipe.objects.all().order_by('recipe_view_count') // This line will get the recipe objects in ascending order.
+
+ recipe.objects.all().order_by('-recipe_view_count') // This line will get the recipe objects in decsending order.
+
+ recipe.objects.all()[0:2] // Slicing concept. It will give two objects say 0 and 1.
+
+ Now for example we want to get the recipe objects whose view count is greater than or equals to 50.
+ recipe.objects.filter(recipe_view_count = 50) // It will give us the recipes whose count is equals to 50.
+ recipe.objects.filter(recipe_view_count__gte = 50) // It __gte is special operator in python same as __icontains, 
+                                                    // __contains and many others. It will give us the recipe objects 
+                                                    // whose count greater than or equals to 50. 
+ recipe.objects.filter(recipe_view_count__lte = 50) // It will give us less than or equals to 50.
+ recipe.objects.filter(recipe_view_count__lt = 50)  // It will give us only less than 50.
+ recipe.objects.filter(recipe_view_count__lte = 50) // It will give us only greater than 50.
