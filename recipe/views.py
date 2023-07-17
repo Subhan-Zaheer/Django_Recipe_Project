@@ -3,6 +3,7 @@ from recipe.models import recipe, my_user
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -34,7 +35,7 @@ def recipes(request):
     return redirect('/login/')
 
 
-
+@login_required(login_url='/login/')
 def update_recipe(request, id):
     my_recipe = recipe.objects.get(id = id)
     print(my_recipe.id, my_recipe.recipe_name, my_recipe.recipe_image)
@@ -63,7 +64,7 @@ def update_recipe(request, id):
     return render(request, 'update_recipe.html', data)
 
 
-
+@login_required(login_url='/login/')
 def delete_recipe(request, id):
     recipe.objects.filter(id = id).delete()
     return redirect('/recipe')
