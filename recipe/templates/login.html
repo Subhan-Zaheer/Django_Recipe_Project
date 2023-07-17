@@ -7,16 +7,31 @@
         <h2 class="text-center mb-4">Sign In</h2>
         <form method="post" action="" enctype="multipart/form-data">
             {% csrf_token%}
-          <div class="mb-3">
-            <label for="name" class="form-label">Username</label>
-            <input type="text" class="form-control" id="name" name="username" placeholder="Enter your name">
-          </div>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-primary" role="alert">
+              <ul class="messages">
+    
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                
+            </ul>
+            </div>
+            {% endfor %}
+
+            {% endif %}
+
+            <div class="col-auto">
+              <label class="form-label" for="autoSizingInputGroup">Username</label>
+              <div class="input-group">
+                <div class="input-group-text">@</div>
+                <input type="text" class="form-control" id="autoSizingInputGroup" name="username" placeholder="Username">
+              </div>
           <div class="mb-3">
             <label for="inputPassword4" class="form-label">Password</label>
             <input name="password" id="inputPassword4" type="password" cols="30" rows="10" class="form-control"></input>
           </div>
           <div>
-            <p>Don't have an account <a class="btn" href="/register/"></a></p>
+            <p>Don't have an account <a class="btn btn-success" href="/register/">Register</a></p>
           </div>
          
           <div class="text-center p-3">

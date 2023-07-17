@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
-from recipe.models import recipe
+from recipe.models import recipe, my_user
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+
 
 # Create your views here.
 
@@ -28,6 +31,8 @@ def recipes(request):
     data = {'recipes':recipes}    
     return render(request, 'recipe.html', data)
 
+
+
 def update_recipe(request, id):
     my_recipe = recipe.objects.get(id = id)
     print(my_recipe.id, my_recipe.recipe_name, my_recipe.recipe_image)
@@ -39,15 +44,15 @@ def update_recipe(request, id):
         my_recipe.recipe_desc = my_recipe_description
         try:
             my_recipe_image = request.FILES.get('recipe_image')
+            if my_recipe_image == None:
+                print(f"if my recipe image is none.")
+                my_recipe_image = my_recipe.recipe_image
             my_recipe.recipe_image = my_recipe_image
         except KeyError as e:
             my_recipe.recipe_image = None
             print(f" Except part My recipe image contains : {my_recipe_image}")
             print(e)
         print(f"My recipe image contains : {my_recipe_image}")
-        if my_recipe_image == None:
-            print(f"if my recipe image is none.")
-            my_recipe_image = my_recipe.recipe_image
         my_recipe.save()
         return redirect('/recipe')
     data = {
@@ -55,13 +60,35 @@ def update_recipe(request, id):
     }
     return render(request, 'update_recipe.html', data)
 
+
+
 def delete_recipe(request, id):
     recipe.objects.filter(id = id).delete()
     return redirect('/recipe')
 
 
+
+
 def login_page(request):
+    if request.method == 'POST':
+        user_name = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not User.objects.filter(username = user_name).exists():
+            messages.error(request, "Invalid UserName or UserName doesnot exist.")
+            return redirect('/login/')
+        elif authenticate(username= user_name, password= password) is None:
+            messages.error(request, "Invalid Password or Username.")
+            return redirect('/login/')
+        else:
+            
+            user = authenticate(username= user_name, password= password)
+            print("User is authentic.")
+            login(request, user=user)
+            return redirect('/recipe/')
     return render(request, 'login.html')
+
+
 
 def register(request):
     if request.method == 'POST':
@@ -69,9 +96,16 @@ def register(request):
         lastname = request.POST.get('lastname')
         user_name = request.POST.get('username')
         password = request.POST.get('password')
+        user = User.objects.filter(username=user_name)
+        if user.exists():
+            messages.info(request, "UserName already taken. Try with different UserName.")
+            return redirect('/register/')
+            pass
         user = User.objects.create(username= user_name, first_name= firstname, last_name = lastname)
         print(password)
         user.set_password(password)
         user.save()
+        my_model_user = my_user.objects.create(first_name = firstname, last_name=lastname, user_name=user_name, password=password)
+        my_model_user.save()
         return redirect('/login/')
     return render(request, 'register.html')

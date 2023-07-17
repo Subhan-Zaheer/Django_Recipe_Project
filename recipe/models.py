@@ -8,3 +8,10 @@ class recipe(models.Model):
     recipe_name = models.CharField(max_length=50)
     recipe_desc = models.TextField()
     recipe_image = models.FileField(upload_to='recipe/', max_length=250, null=True, default=None)
+
+class my_user(models.Model):
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
+    user_name = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+
