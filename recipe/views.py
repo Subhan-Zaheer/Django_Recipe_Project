@@ -2,34 +2,36 @@ from django.shortcuts import render, redirect
 from recipe.models import recipe, my_user
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
 
 def recipes(request):
-    if request.method == 'POST':
-        print(request.POST)
-        my_recipe_name = request.POST.get('recipe_name')
-        my_recipe_description = request.POST.get('recipe_desc')
-        my_recipe_image = request.FILES['recipe_image']
-        print(f'{my_recipe_name}, {my_recipe_description}, {my_recipe_image}')
-        recipe_obj = recipe(recipe_name = my_recipe_name, recipe_desc= my_recipe_description, 
-                            recipe_image = my_recipe_image)
-        recipe_obj.save()
-        return redirect('/recipe')
-    recipe_obj = recipe.objects.all()
-    if request.method == 'GET':
-        if request.GET.get('search'):
-            recipe_obj = recipe.objects.filter(recipe_name__icontains = request.GET.get('search'))
-            data = {
-                'recipes':recipe_obj
-            }
-            return render(request, 'recipe.html', data) 
-    
-    recipes = recipe.objects.all()
-    data = {'recipes':recipes}    
-    return render(request, 'recipe.html', data)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            print(request.POST)
+            my_recipe_name = request.POST.get('recipe_name')
+            my_recipe_description = request.POST.get('recipe_desc')
+            my_recipe_image = request.FILES['recipe_image']
+            print(f'{my_recipe_name}, {my_recipe_description}, {my_recipe_image}')
+            recipe_obj = recipe(recipe_name = my_recipe_name, recipe_desc= my_recipe_description, 
+                                recipe_image = my_recipe_image)
+            recipe_obj.save()
+            return redirect('/recipe')
+        recipe_obj = recipe.objects.all()
+        if request.method == 'GET':
+            if request.GET.get('search'):
+                recipe_obj = recipe.objects.filter(recipe_name__icontains = request.GET.get('search'))
+                data = {
+                    'recipes':recipe_obj
+                }
+                return render(request, 'recipe.html', data) 
+        
+        recipes = recipe.objects.all()
+        data = {'recipes':recipes}    
+        return render(request, 'recipe.html', data)
+    return redirect('/login/')
 
 
 
@@ -88,6 +90,11 @@ def login_page(request):
             return redirect('/recipe/')
     return render(request, 'login.html')
 
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
 
 
 def register(request):

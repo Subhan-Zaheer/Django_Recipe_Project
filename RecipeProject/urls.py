@@ -27,6 +27,7 @@ urlpatterns = [
     path('update-recipe/<id>', update_recipe,),
     path('login/', login_page,),
     path('register/', register,),
+    path('logout/', logout_page,),
 
 ]
 
