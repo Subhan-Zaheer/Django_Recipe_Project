@@ -69,3 +69,5 @@ class Student(models.Model):
 Moreover, we created some more models just for mastering django queries. For this purpose we need to add some data. 
 Rather than adding manual data we can generate fake data using faker library. Now we will word in seeds.py.
 
+Queries in DB:
+startswith : This keyword is used if we want to get a field that starts with certain string. 
