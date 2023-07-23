@@ -71,5 +71,20 @@ Rather than adding manual data we can generate fake data using faker library. No
 
 Queries in DB:
 startswith : This keyword is used if we want to get a field that starts with certain string. 
-example : Student.objects.filter(student_name__startswith = 'su')
+code : Student.objects.filter(student_name__startswith = 'su')
+
+endswith : This keyword is used if we want to get a field that ends with certain string.
+code : Student.objects.filter(student_email__endswith = '.com')
+
+icontaints : This keyword is used to filter the data on some input. For example if we want to get a string that 
+             contains 'su' lets say subhan, suleman etc... so it will get those names which contains the given 
+             substrings.
+code : Student.objects.filter(student_name__icontains = 'su')
+
+contains : This keyword is used to filter the data that contains exactly the same string that given as input. 
+            for example if we give 'subhan' so it will extract the name which contains 'subhan'
+code : Student.objects.filter(student_name__contains = 'subhan')
+
+
+
 
