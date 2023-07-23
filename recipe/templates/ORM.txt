@@ -112,6 +112,16 @@ code : ls = ['Mechanical Engineering']
        Student.objects.exclude(department__department__in = ls) 
 So, instead of 'filter' we use 'exclude' keyword/function.
 
+Now, if we want to check if our query return a value or not.
+code : obj = Student.objects.filter(student_name__icontains = 'A')
+       obj.exists() #It will return True if it contains some value otherwise it will return False. 
+
+
+If we want to restrict the size of data to come, we can use slicing method. 
+code : Student.objects.filter(student_name__icontains = 'A')[0:100]
+
+
+
 
 
 

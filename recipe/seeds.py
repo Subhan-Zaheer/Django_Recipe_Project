@@ -15,13 +15,13 @@ def seed_db():
             department_obj = Department.objects.all()
             random_index = random.randint(0, len(department_obj)-1)
             department = department_obj[random_index]
-            student_id = f"STU-{random.randint(100, 999)}"
+            my_student_id = f"STU-{random.randint(100, 999)}"
             student_name = fake.name()
             student_email = fake.email()
             student_age = random.randint(18, 24)
             student_address = fake.address()
 
-            student_id_obj = StudentId.objects.create(student_id = student_id)
+            student_id_obj = StudentId.objects.create(student_id = my_student_id)
 
             student_obj = Student.objects.create(
                 student_name = student_name,
