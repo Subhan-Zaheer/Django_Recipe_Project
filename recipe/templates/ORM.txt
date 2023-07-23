@@ -127,6 +127,18 @@ code : Student.objects.all().reverse()
 'union' function is used to join or union two queries.
 
 
+ANNOTATIOIN AND AGGREGATION : 
+
+from django.db.model import * #This line is used to import all aggregate and annotation functions.
+
+Student.objects.aggregate(Avg('student_age')) # This line of code get the average of student age. 
+Student.objects.aggregate(Sum('student_age')) # This line of code get the sum of student age. 
+Student.objects.aggregate(Max('student_age')) # This line of code will get the maximum of student age.
+Student.objects.aggregate(Min('student_age')) # This line of code will get the minimum of student age.
+
+
+Student.objects.values('student_age').annotate(Count('student_age')) 
+#This line of code will perform annotation i.e it will return that how many students are of age 20, 21 etc.
 
 
 
