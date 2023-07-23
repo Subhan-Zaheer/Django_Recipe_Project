@@ -120,6 +120,15 @@ code : obj = Student.objects.filter(student_name__icontains = 'A')
 If we want to restrict the size of data to come, we can use slicing method. 
 code : Student.objects.filter(student_name__icontains = 'A')[0:100]
 
+Now, if we want to print data in reverse order. 
+code : Student.objects.all().reverse()
+
+
+'union' function is used to join or union two queries.
+
+
+
+
 
 
 
