@@ -87,4 +87,32 @@ code : Student.objects.filter(student_name__contains = 'subhan')
 
 
 
+How to get field that is foriegn key or field of another entity ?
+In our case we have department as Foriegn Key of Student, so we will get the department name of student like this :
+
+code : obj = Student.objects.filter(student_address__icontains = 'Shannon')
+        for objects in obj:
+            print(objects.department.department)
+In above example we get the data in 'obj' and then we performed the operation to get the deparment name. 
+What if we find the deparment without getting the data in 'obj'.
+
+code : Student.objects.filter(department__department_name = 'Civil') (according to my model).
+       Student.objects.filter(department__department_name__icontains = 'Civil') (can also do this).
+
+
+How to use 'OR' operation. for example if we want to get the students whose department is 'Mechanical Engineering',
+'Computer Sciences', 'Electrical Engineering'. We can do this using the following code. 
+
+code : ls = ['Computer Sciences', 'Electrical Engineering', 'Mechanical Engineering']
+       Student.objects.filter(department__department__in = ls) 
+
+
+How to get the data except the input data. 
+code : ls = ['Mechanical Engineering']
+       Student.objects.exclude(department__department__in = ls) 
+So, instead of 'filter' we use 'exclude' keyword/function.
+
+
+
+
 
