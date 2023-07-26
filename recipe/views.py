@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from recipe.models import recipe, my_user
+from recipe.models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import *
 
 
 # Create your views here.
-# @login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def recipes(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -73,6 +75,7 @@ def delete_recipe(request, id):
 
 
 def login_page(request):
+    data = Student.objects.values('student_age').annotate(Count('student_age'))
     if request.method == 'POST':
         user_name = request.POST.get('username')
         password = request.POST.get('password')
@@ -89,7 +92,7 @@ def login_page(request):
             print("User is authentic.")
             login(request, user=user)
             return redirect('/recipe/')
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'data' : data})
 
 
 
